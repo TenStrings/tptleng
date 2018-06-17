@@ -1,11 +1,10 @@
 antlr4 = java -jar /usr/local/lib/antlr-4.7.1-complete.jar
-main: json.g4
-	$(antlr4) $< && javac json*.java
+grammar = ./json.g4
 
-test:
-	java org.antlr.v4.gui.TestRig json value -tokens
+main: $(grammar) 
+	$(antlr4) -Dlanguage=Python3 $<
 
 .PHONY: clean
 
 clean:
-	rm -f *.java *.class *.interp *.tokens
+	rm -f jsonLexer.* jsonParser.py json.interp json.tokens jsonListener.py 

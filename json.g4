@@ -4,18 +4,18 @@ grammar json;
 
 json : value EOF;
 
-object : 
+obj : 
     '{}' |
     '{' pair (',' pair)* '}';
 
 pair :
     STRING ':' value;
 
-array :
+arr :
     '[]' | '[' value (',' value)* ']';
 
 value :
-    STRING | NUMBER | object | array | 'true' | 'false' | 'null';
+    STRING | NUMBER | obj | arr | 'true' | 'false' | 'null';
 
 //LEXER RULES
 
