@@ -6,20 +6,13 @@ json : value EOF;
 
 object : 
     '{}' |
-    '{' members '}';
-
-members :
-    pair | pair ',' members;
+    '{' pair (',' pair)* '}';
 
 pair :
     STRING ':' value;
 
 array :
-    '[]' | '[' elements ']';
-
-elements :
-    value
-    value ',' elements;
+    '[]' | '[' value (',' value)* ']';
 
 value :
     STRING | NUMBER | object | array | 'true' | 'false' | 'null';
@@ -28,7 +21,7 @@ value :
 
 fragment DIGIT : [0-9];
 
-WHITESPACE : [\n\t\r]+ -> skip;
+WHITESPACE : [ \n\t\r]+ -> skip;
 
 NUMBER :
         INT FRAC? EXP?;
@@ -41,9 +34,9 @@ FRAC :
     '.' DIGIT*;
 
 EXP :
-    [eE][+-]? DIGIT*;
+    [eE][+\-]? DIGIT*;
 
-fragment CONTROL :
+fragment INVALID :
     ~ ["\u0000-\u001f\\]; 
 
 fragment ESCAPED :
@@ -52,5 +45,8 @@ fragment ESCAPED :
 fragment HEX :
     [0-9a-fA-F];
 
+fragment STRINGUNICODE:
+    '\\u' HEX HEX HEX HEX;
+
 STRING :
-    '"' ( CONTROL | ESCAPED )* '"';
+    '"' ( INVALID | ESCAPED | STRINGUNICODE )* '"';
