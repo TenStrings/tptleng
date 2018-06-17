@@ -18,7 +18,9 @@ class toYaml(jsonListener):
         pass
 
     def enterObj(self, ctx:jsonParser.ObjContext):
-        pass
+        keys = [p.STRING().getText() for p in ctx.pair()]
+        if len(keys) != len(set(keys)):
+            raise Exception("Clave repetida")
     
     def exitObj(self, ctx:jsonParser.ObjContext):
         pass
@@ -36,7 +38,7 @@ class toYaml(jsonListener):
         pass
 
     def enterValue(self, ctx:jsonParser.ValueContext):
-        self.output.write(ctx.getText())
+        pass
 
     def exitValue(self, ctx:jsonParser.ValueContext):
         pass
