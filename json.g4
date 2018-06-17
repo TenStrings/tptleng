@@ -1,8 +1,11 @@
-grammar JSON;
+grammar json;
 
-//TOKENS
+//PARSER RULES
 
-FRAGMENT DIGIT : [0-9];
+text : NUMBER (' ' | EOF);
+//LEXER RULES
+
+fragment DIGIT : [0-9];
 
 WHITESPACE : [\n\t\r]+ -> skip;
 
@@ -17,4 +20,4 @@ FRAC :
     '.' DIGIT*;
 
 EXP :
-    [e,e+,e-,E,E+,E-] DIGIT*;
+    [eE][+-]? DIGIT*;
