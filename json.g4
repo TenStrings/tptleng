@@ -2,7 +2,28 @@ grammar json;
 
 //PARSER RULES
 
-text : NUMBER (' ' | EOF);
+json : value EOF;
+
+object : 
+    '{}' |
+    '{' members '}';
+
+members :
+    pair | pair ',' members;
+
+pair :
+    STRING ':' value;
+
+array :
+    '[]' | '[' elements ']';
+
+elements :
+    value
+    value ',' elements;
+
+value :
+    STRING | NUMBER | object | array | 'true' | 'false' | 'null';
+
 //LEXER RULES
 
 fragment DIGIT : [0-9];
@@ -21,3 +42,15 @@ FRAC :
 
 EXP :
     [eE][+-]? DIGIT*;
+
+fragment CONTROL :
+    ~ ["\u0000-\u001f\\]; 
+
+fragment ESCAPED :
+    '\\' ["\\/bfnrt];
+
+fragment HEX :
+    [0-9a-fA-F];
+
+STRING :
+    '"' ( CONTROL | ESCAPED )* '"';
