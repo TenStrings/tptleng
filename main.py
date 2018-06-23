@@ -1,4 +1,4 @@
-#!/usr/bin env python3
+#!/usr/bin/env python3
 import sys
 from antlr4 import *
 from jsonLexer import jsonLexer
@@ -7,6 +7,7 @@ from toYaml import toYaml
 from jsonListener import jsonListener
 
 def main(filename):
+    #TODO: Descubrir como hacer para leer desde stdin
     input = FileStream(filename)
     lexer = jsonLexer(input)
     stream = CommonTokenStream(lexer)

@@ -15,22 +15,7 @@ arr :
     '[]' | '[' value (',' value)* ']';
 
 value :
-    string | num | obj | arr | tr | fs | nil;
-
-string :
-    STRING;
-
-num :
-    NUMBER;
-
-tr :
-    'true';
-
-fs :
-    'false';
-
-nil :
-    'null';
+    STRING | NUMBER | obj | arr | 'true' | 'false' | 'null';
 
 //LEXER RULES
 
