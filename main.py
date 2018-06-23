@@ -1,3 +1,4 @@
+#!/usr/bin env python3
 import sys
 from antlr4 import *
 from jsonLexer import jsonLexer
