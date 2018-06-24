@@ -9,7 +9,7 @@ obj :
     '{' pair (',' pair)* '}';
 
 pair :
-    STRING ':' value;
+    string ':' value;
 
 arr :
     '[]' | '[' value (',' value)* ']';

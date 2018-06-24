@@ -60,7 +60,7 @@ class toYaml(jsonListener):
 
     # Enter a parse tree produced by jsonParser#string.
     def enterString(self, ctx:jsonParser.StringContext):
-        pass
+        self.output.write(ctx.STRING().getText()) 
 
     # Exit a parse tree produced by jsonParser#string.
     def exitString(self, ctx:jsonParser.StringContext):
