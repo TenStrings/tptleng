@@ -22,7 +22,7 @@ class toYaml(jsonListener):
 
     # Enter a parse tree produced by jsonParser#obj.
     def enterObj(self, ctx:jsonParser.ObjContext):
-        keys = [p.STRING().getText() for p in ctx.pair()]
+        keys = [p.string().getText() for p in ctx.pair()]
         if len(keys) != len(set(keys)):
             raise Exception("Clave repetida")
 
