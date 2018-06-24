@@ -17,7 +17,7 @@ class toYaml(jsonListener):
 
     # Exit a parse tree produced by jsonParser#json.
     def exitJson(self, ctx:jsonParser.JsonContext):
-        pass
+        self.output.write("\n") 
 
 
     # Enter a parse tree produced by jsonParser#obj.

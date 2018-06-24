@@ -5,10 +5,20 @@ from jsonLexer import jsonLexer
 from jsonParser import jsonParser
 from toYaml import toYaml
 from jsonListener import jsonListener
+import codecs 
 
-def main(filename):
-    #TODO: Descubrir como hacer para leer desde stdin
-    input = FileStream(filename)
+class StdinStream(InputStream):
+
+    def __init__(self, encoding='utf-8', errors='strict'):
+        bytes = sys.stdin.read()
+        super().__init__(bytes)
+
+
+def main(filename = None):
+    if filename:
+        input = FileStream(filename)
+    else:    
+        input = StdinStream() 
     lexer = jsonLexer(input)
     stream = CommonTokenStream(lexer)
     parser = jsonParser(stream)
@@ -22,4 +32,8 @@ def main(filename):
     walker.walk(converter, tree)
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    if len(sys.argv) == 2:
+        main(sys.argv[1])
+    else:
+        main()
+
