@@ -4,15 +4,21 @@ grammar json;
 
 json : value EOF;
 
-obj : 
+obj :
     '{}' |
     '{' pair (',' pair)* '}';
 
 pair :
-    string ':' value;
+    pairFirst ':' value;
+
+pairFirst :
+    string;
 
 arr :
-    '[]' | '[' value (',' value)* ']';
+    '[]' | '[' valueArray (',' valueArray)* ']';
+
+valueArray :
+    value;
 
 value :
     string | num | obj | arr | tr | fs | nil;
@@ -52,7 +58,7 @@ EXP :
     [eE][+\-]? DIGIT*;
 
 fragment INVALID :
-    ~ ["\u0000-\u001f\\]; 
+    ~ ["\u0000-\u001f\\];
 
 fragment ESCAPED :
     '\\' ["\\/bfnrt];

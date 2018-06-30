@@ -1,1 +1,2 @@
-{ "miau" : true , "pepe" : false }
+{ "miau" : true , "tomi" : 8 , "object" :
+  {"cielo" : "tierra" , "number" : 2, "enzo" : { "gato" : true}}, "last" : 2}
