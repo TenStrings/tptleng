@@ -37,11 +37,23 @@ class toYaml(jsonListener):
         pass
 
     def enterCollection(self, ctx:jsonParser.CollectionContext):
-        if not self.first:
-            self.output.write('\n')
-            self.counter = self.counter + 2
+        empty = None
+        collectionValues = None
+        if ctx.obj():
+            collectionValues = [p for p in ctx.obj().pair()]
+            empty = '{}'
+        elif ctx.arr():
+            collectionValues = [p for p in ctx.arr().valueArray()]
+            empty = '[]'
+
+        if collectionValues == []:
+            self.output.write(empty)
         else:
-            self.first = False
+            if not self.first:
+                self.output.write('\n')
+                self.counter = self.counter + 2
+            else:
+                self.first = False
 
     def exitCollection(self, ctx:jsonParser.CollectionContext):
         self.counter = self.counter - 2
