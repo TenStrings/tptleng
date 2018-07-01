@@ -1,2 +1,21 @@
-{ "miau" : true , "tomi" : 8 , "object" :
-  {"cielo" : "tierra" , "number" : 2, "enzo" : { "gato" : true}}, "last" : 2}
+{
+  "miau" : true ,
+  "tomi" : 8 ,
+  "object" :
+    {
+      "cielo" : "ti\nerra",
+      "number" : 2,
+      "enzo" :
+        {
+          "gato" : true
+        },
+      "clave" :
+        [
+          "pepe",
+          2,
+          ["enzo", "gro-so", "putin"],
+          {"pepe" : 12}
+        ]
+    },
+    "last" : 2
+}

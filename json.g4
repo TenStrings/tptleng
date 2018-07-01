@@ -4,6 +4,9 @@ grammar json;
 
 json : value EOF;
 
+collection :
+  obj | arr ;
+
 obj :
     '{}' |
     '{' pair (',' pair)* '}';
@@ -21,7 +24,7 @@ valueArray :
     value;
 
 value :
-    string | num | obj | arr | tr | fs | nil;
+    collection | string | num | tr | fs | nil;
 
 string :
     STRING;

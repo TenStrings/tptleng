@@ -13,6 +13,7 @@ class toYaml(jsonListener):
         self.counter = 0
         self.first = True
         self.firstPair = True
+        self.firstArrayValue = True
 
     # Enter a parse tree produced by jsonParser#json.
     def enterJson(self, ctx:jsonParser.JsonContext):
@@ -22,23 +23,28 @@ class toYaml(jsonListener):
     def exitJson(self, ctx:jsonParser.JsonContext):
         self.output.write("\n")
 
-
     # Enter a parse tree produced by jsonParser#obj.
     def enterObj(self, ctx:jsonParser.ObjContext):
         keys = [p.pairFirst().getText() for p in ctx.pair()]
+
         if len(keys) != len(set(keys)):
             raise Exception("Clave repetida")
         else:
-            if not self.first:
-                self.output.write('\n')
-                self.counter = self.counter + 2
             self.firstPair = True
-            self.first = False
 
     # Exit a parse tree produced by jsonParser#obj.
     def exitObj(self, ctx:jsonParser.ObjContext):
-        self.counter = self.counter - 2
+        pass
 
+    def enterCollection(self, ctx:jsonParser.CollectionContext):
+        if not self.first:
+            self.output.write('\n')
+            self.counter = self.counter + 2
+        else:
+            self.first = False
+
+    def exitCollection(self, ctx:jsonParser.CollectionContext):
+        self.counter = self.counter - 2
 
     # Enter a parse tree produced by jsonParser#pair.
     def enterPair(self, ctx:jsonParser.PairContext):
@@ -50,15 +56,18 @@ class toYaml(jsonListener):
         self.output.write(' ' * self.counter)
 
     def enterValueArray(self, ctx:jsonParser.ValueArrayContext):
-        self.output.write('  ' * self.counter +  '-')
+        if self.firstArrayValue:
+            self.firstArrayValue = False
+        else:
+            self.output.write('\n')
+
+        self.output.write(' ' * self.counter +  '-')
 
     def exitValueArray(self, ctx:jsonParser.ValueArrayContext):
-        self.output.write('\n')
-
+        pass
     # Exit a parse tree produced by jsonParser#pair.
     def exitPair(self, ctx:jsonParser.PairContext):
         pass
-
 
      # Exit a parse tree produced by jsonParser#pair.
     def exitPairFirst(self, ctx:jsonParser.PairContext):
@@ -66,16 +75,11 @@ class toYaml(jsonListener):
 
     # Enter a parse tree produced by jsonParser#arr.
     def enterArr(self, ctx:jsonParser.ArrContext):
-        if not self.first:
-            self.output.write('\n')
-            self.counter = self.counter + 2
-        self.firstPair = True
-        self.first = False
+        self.firstArrayValue = True
 
     # Exit a parse tree produced by jsonParser#arr.
     def exitArr(self, ctx:jsonParser.ArrContext):
         pass
-
 
     # Enter a parse tree produced by jsonParser#value.
     def enterValue(self, ctx:jsonParser.ValueContext):
@@ -89,7 +93,10 @@ class toYaml(jsonListener):
 
     # Enter a parse tree produced by jsonParser#string.
     def enterString(self, ctx:jsonParser.StringContext):
-        self.output.write(ctx.STRING().getText())
+        str = ctx.STRING().getText()
+        if not ('-' in str or '\\n' in str):
+            str = str.replace('"','')
+        self.output.write(str)
 
     # Exit a parse tree produced by jsonParser#string.
     def exitString(self, ctx:jsonParser.StringContext):
@@ -124,7 +131,7 @@ class toYaml(jsonListener):
 
     # Enter a parse tree produced by jsonParser#nil.
     def enterNil(self, ctx:jsonParser.NilContext):
-        self.output.write(ctx.getText())
+        self.output.write('')
 
     # Exit a parse tree produced by jsonParser#nil.
     def exitNil(self, ctx:jsonParser.NilContext):

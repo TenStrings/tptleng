@@ -1,23 +1,2 @@
-{"enzo": 1, "array" : ["enzo", "groso", "putin"]}
-
-enzo: 1
-array:
-  - enzo
-  - groso
-  - putin
-
-  ---
-  - clave1: valor1
-    clave 2:
-    - 125
-    - Cadena 1
-    "- clave3": true
-  - |-
-    Cadena con salto
-    de l´ınea
-  - -
-    - 35600000000
-    - {}
-
-"enzo": 1
-"array": "enzo""groso""putin"
+[ {"clave1": "valor1", "clave 2": [ 125, "Cadena 1" ], "- clave3": true},
+"Cadena con salto\nde linea", [null, 35.6e9, {}] ]
