@@ -27,7 +27,6 @@ def main(filename = None):
     output = sys.stdout
 
     converter = toYaml(output)
-    listener = jsonListener()
     walker = ParseTreeWalker()
     walker.walk(converter, tree)
 
