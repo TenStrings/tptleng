@@ -1,21 +1,29 @@
 {
-  "miau" : true ,
-  "tomi" : 8 ,
-  "object" :
+  "materia" : "tleng" ,
+  "divertida" : true , 
+  "informacion" :
     {
-      "cielo" : "ti\nerra",
-      "number" : 2,
-      "enzo" :
+      "anio" : 2018 ,
+      "cuatrimestre" : "primero" ,
+      "integrantes" : ["enzo", "tomi", "tomi"] ,
+      "grupo" : "el dragon" ,	
+      "rendimiento" :
         {
-          "gato" : true
+          "primer parcial" : 43 ,
+          "segundo parcial" : 50
         },
-      "clave" :
-        [
-          "pepe",
-          2,
-          ["enzo", "gro-so", "putin"],
-          {"pepe" : 12}
-        ]
-    },
-    "last" : 2
+        "lista de objetos" : [{
+        	"a" : 1,
+        	"b" : "dos",
+        	"c" : true
+        }, {
+        	"a" : 2,
+        	"b" : "uno",
+        	"c" : false
+        }]
+
+      
+} ,
+"caracter especial" : "ti\nerra",
+"evaluacion final del tp" : "Aprobado summa cum laude"
 }
