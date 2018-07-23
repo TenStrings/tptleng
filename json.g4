@@ -8,8 +8,7 @@ collection :
   obj | arr ;
 
 obj :
-    '{}' |
-    '{' pair (',' pair)* '}';
+    '{' (pair (',' pair)*)? '}';
 
 pair :
     pairFirst ':' value;
@@ -18,7 +17,7 @@ pairFirst :
     string;
 
 arr :
-    '[]' | '[' valueArray (',' valueArray)* ']';
+    '[' (valueArray (',' valueArray)*)? ']';
 
 valueArray :
     value;

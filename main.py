@@ -17,18 +17,45 @@ class CustomErrorListener(ErrorListener):
 
         lista = recognizer.getRuleInvocationStack()
         tipo = lista[0]
-        print(lista)
+
+        tipo_regla = {
+            'arr': 'arreglo',
+            'obj': 'objeto',
+            'value': 'valor',
+            'pair': 'par'
+        }
+
         print(  "Error de parseo en línea",
                 line, ":", column)
 
         if offendingSymbol.text == "<EOF>":
             print("La entrada terminó de manera inesperada")
 
-        print("Se estaba parseando un:", tipo)
+        print("Se estaba parseando un", tipo_regla[tipo])
 
-        if(tipo == "arr"):
-            print("posiblemente falte agregar un ']'")
+        if tipo == "arr":
+            if offendingSymbol.text == "<EOF>" :
+                print("posiblemente falte agregar un ']'")
+            else:
+                print("los valores de un arreglo deben ir separados por ','")
+        elif tipo == "obj":
+            if offendingSymbol.text == "<EOF>" :
+                print("posiblemente falte agregar un '}'")
+            else:
+                print("los pares deben ir separados por ','")
+        elif tipo == "pair":
+            if offendingSymbol.text == "<EOF>" :
+                print("los pares deben ser de la forma 'clave: valor'")
+            else:
+                print("la clave debe ir seguida de ':' y el valor")
 
+        exit()
+
+class CustomLexerErrorListener(ErrorListener):
+    def syntaxError(self, lexer, offendingSymbol, line, column, msg, e):
+        token = msg.split("'")[1]
+        print("Error: Token inválido", token)
+        print("Línea",line,":", column)
         exit()
 
 class StdinStream(InputStream):
@@ -44,6 +71,8 @@ def main(filename = None):
     else:
         input = StdinStream()
     lexer = jsonLexer(input)
+    lexer.removeErrorListeners()
+    lexer.addErrorListener(CustomLexerErrorListener())
     stream = CommonTokenStream(lexer)
     parser = jsonParser(stream)
     parser.removeErrorListeners()
