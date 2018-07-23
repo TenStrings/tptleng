@@ -22,7 +22,9 @@ class CustomErrorListener(ErrorListener):
             'arr': 'arreglo',
             'obj': 'objeto',
             'value': 'valor',
-            'pair': 'par'
+            'pair': 'par',
+            'string' : 'string'
+
         }
 
         print(  "Error de parseo en línea",
@@ -46,8 +48,10 @@ class CustomErrorListener(ErrorListener):
         elif tipo == "pair":
             if offendingSymbol.text == "<EOF>" :
                 print("los pares deben ser de la forma 'clave: valor'")
-            else:
-                print("la clave debe ir seguida de ':' y el valor")
+        elif tipo == "string":        
+            print("la clave debe ser un string")
+        else:
+            print("la clave debe ir seguida de ':' y el valor")
 
         exit()
 
