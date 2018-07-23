@@ -5,7 +5,31 @@ from jsonLexer import jsonLexer
 from jsonParser import jsonParser
 from toYaml import toYaml
 from jsonListener import jsonListener
-import codecs 
+from JsonParserCustomError import *
+from antlr4.error.ErrorListener import ErrorListener
+import codecs
+
+import sys
+
+class CustomErrorListener(ErrorListener):
+
+    def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
+
+        lista = recognizer.getRuleInvocationStack()
+        tipo = lista[0]
+        print(lista)
+        print(  "Error de parseo en línea",
+                line, ":", column)
+
+        if offendingSymbol.text == "<EOF>":
+            print("La entrada terminó de manera inesperada")
+
+        print("Se estaba parseando un:", tipo)
+
+        if(tipo == "arr"):
+            print("posiblemente falte agregar un ']'")
+
+        exit()
 
 class StdinStream(InputStream):
 
@@ -17,11 +41,13 @@ class StdinStream(InputStream):
 def main(filename = None):
     if filename:
         input = FileStream(filename)
-    else:    
-        input = StdinStream() 
+    else:
+        input = StdinStream()
     lexer = jsonLexer(input)
     stream = CommonTokenStream(lexer)
     parser = jsonParser(stream)
+    parser.removeErrorListeners()
+    parser.addErrorListener(CustomErrorListener())
     tree = parser.json()
 
     output = sys.stdout
@@ -35,4 +61,3 @@ if __name__ == '__main__':
         main(sys.argv[1])
     else:
         main()
-
