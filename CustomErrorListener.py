@@ -44,6 +44,16 @@ class CustomErrorListener(ErrorListener):
             elif "getExpectedTokens" in dir(e):
                 tokens = ["'" + token_names[token_num].lower() + "'" for token_num in
                     e.getExpectedTokens()]
+                tokens = []
+                for token_num in e.getExpectedTokens():
+                    try:
+                        tokens.append(
+                            "'" +
+                            token_names[token_num].lower().replace("'", "")
+                            + "'")
+                    except KeyError:
+                        pass
+
                 print("posiblemente falta:", " o ".join(tokens))
                 print("se encontró:", "'"+ offendingSymbol.text + "'" )
             else:
