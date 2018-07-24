@@ -44,15 +44,17 @@ class CustomErrorListener(ErrorListener):
             if offendingSymbol.text == "<EOF>" :
                 print("posiblemente falte agregar un '}'")
             else:
-                print("se esperaba un string o una ','",
-                ",en cambio se encontró:", "'"+ offendingSymbol.text + "'" )
+                print("se esperaba un '}' o una ','",
+                ", en cambio se encontró:", "'"+ offendingSymbol.text + "'" )
         elif tipo == "pair":
             if offendingSymbol.text == "<EOF>" :
                 print("los pares deben ser de la forma 'clave: valor'")
         elif tipo == "string":
-            print("no se encontró un string válido")
+            print("en cambio se encontró:", "'"+ offendingSymbol.text + "'",
+            "que no es un string válido")
         elif tipo == "value":
-            pass
+            if offendingSymbol.text != "<EOF>" :
+                print("pero se encontró:", "'"+ offendingSymbol.text + "'" )
         else:
             pass
 
