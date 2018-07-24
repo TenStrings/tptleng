@@ -33,7 +33,7 @@ class CustomErrorListener(ErrorListener):
         if offendingSymbol.text == "<EOF>":
             print("La entrada terminó de manera inesperada")
 
-        print("Se estaba parseando un", tipo_regla[tipo])
+        print("Se esperaba un", tipo_regla[tipo])
 
         if tipo == "arr":
             if offendingSymbol.text == "<EOF>" :
@@ -44,14 +44,17 @@ class CustomErrorListener(ErrorListener):
             if offendingSymbol.text == "<EOF>" :
                 print("posiblemente falte agregar un '}'")
             else:
-                print("los pares deben ir separados por ','")
+                print("se esperaba un string o una ','",
+                ",en cambio se encontró:", "'"+ offendingSymbol.text + "'" )
         elif tipo == "pair":
             if offendingSymbol.text == "<EOF>" :
                 print("los pares deben ser de la forma 'clave: valor'")
-        elif tipo == "string":        
-            print("la clave debe ser un string")
+        elif tipo == "string":
+            print("no se encontró un string válido")
+        elif tipo == "value":
+            pass
         else:
-            print("la clave debe ir seguida de ':' y el valor")
+            pass
 
         exit()
 
